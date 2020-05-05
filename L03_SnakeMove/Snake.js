@@ -10,11 +10,13 @@ var L03_SnakeMove;
             this.createSegement(4);
         }
         move() {
+            let nodes = this.getChildren();
             let child = this.getChildren()[0];
             let cmpPrev = child.getComponent(ƒ.ComponentTransform); // child.cmpTransform;
-            let mtxHead = cmpPrev.local.copy;
-            mtxHead.translate(this.direction);
-            let cmpNew = new ƒ.ComponentTransform(mtxHead);
+            let mtxHead = nodes[0].getComponent(ƒ.ComponentTransform);
+            mtxHead.local.translate(this.direction);
+            let mtxHeadCopy = cmpPrev.local;
+            let cmpNew = new ƒ.ComponentTransform(mtxHeadCopy);
             for (let segment of this.getChildren()) {
                 cmpPrev = segment.getComponent(ƒ.ComponentTransform);
                 segment.removeComponent(cmpPrev);
@@ -22,9 +24,20 @@ var L03_SnakeMove;
                 cmpNew = cmpPrev;
             }
         }
+        moveSnake() {
+            let nodes = this.getChildren();
+            let nextTrans = nodes[0].mtxLocal.translation;
+            let tempTrans = nodes[0].mtxLocal.translation;
+            nodes[0].mtxLocal.translation = ƒ.Vector3.SUM(nextTrans, this.direction);
+            for (let i = 1; i < nodes.length; i++) {
+                tempTrans = nodes[i].mtxLocal.translation;
+                nodes[i].mtxLocal.translation = nextTrans;
+                nextTrans = tempTrans;
+            }
+        }
         createSegement(_segments) {
             let mesh = new ƒ.MeshQuad();
-            let mtrSolidWhite = new ƒ.Material("SolidWhite", ƒ.ShaderUniColor, new ƒ.CoatColored(ƒ.Color.CSS("WHITE")));
+            let mtrSolidWhite = new ƒ.Material("SolidWhite", ƒ.ShaderUniColor, new ƒ.CoatColored(ƒ.Color.CSS("mediumvioletred")));
             for (let i = 0; i < _segments; i++) {
                 let segment = new ƒ.Node("Segment");
                 let cmpMesh = new ƒ.ComponentMesh(mesh);

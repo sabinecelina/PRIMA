@@ -9,13 +9,15 @@ namespace L03_SnakeMove {
       console.log("Creating Snake");
       this.createSegement(4);
     }
-    
+
     public move(): void {
+      let nodes: ƒ.Node[] = this.getChildren();
       let child: ƒ.Node = this.getChildren()[0];
       let cmpPrev: ƒ.ComponentTransform = child.getComponent(ƒ.ComponentTransform);  // child.cmpTransform;
-      let mtxHead: ƒ.Matrix4x4 = cmpPrev.local.copy;
-      mtxHead.translate(this.direction);
-      let cmpNew: ƒ.ComponentTransform = new ƒ.ComponentTransform(mtxHead);
+      let mtxHead: ƒ.ComponentTransform = nodes[0].getComponent(ƒ.ComponentTransform);
+      mtxHead.local.translate(this.direction);
+      let mtxHeadCopy: ƒ.Matrix4x4 = cmpPrev.local;
+      let cmpNew: ƒ.ComponentTransform = new ƒ.ComponentTransform(mtxHeadCopy);
 
       for (let segment of this.getChildren()) {
         cmpPrev = segment.getComponent(ƒ.ComponentTransform);
@@ -24,10 +26,22 @@ namespace L03_SnakeMove {
         cmpNew = cmpPrev;
       }
     }
+    public moveSnake(): void {
+      let nodes: ƒ.Node[] = this.getChildren();
+      let nextTrans: ƒ.Vector3 = nodes[0].mtxLocal.translation;
+      let tempTrans: ƒ.Vector3 = nodes[0].mtxLocal.translation;
+
+      nodes[0].mtxLocal.translation = ƒ.Vector3.SUM(nextTrans, this.direction);
+      for (let i: number = 1; i < nodes.length; i++) {
+        tempTrans = nodes[i].mtxLocal.translation;
+        nodes[i].mtxLocal.translation = nextTrans;
+        nextTrans = tempTrans;
+      }
+    }
 
     private createSegement(_segments: number): void {
       let mesh: ƒ.MeshQuad = new ƒ.MeshQuad();
-      let mtrSolidWhite: ƒ.Material = new ƒ.Material("SolidWhite", ƒ.ShaderUniColor, new ƒ.CoatColored(ƒ.Color.CSS("WHITE")));
+      let mtrSolidWhite: ƒ.Material = new ƒ.Material("SolidWhite", ƒ.ShaderUniColor, new ƒ.CoatColored(ƒ.Color.CSS("mediumvioletred")));
 
       for (let i: number = 0; i < _segments; i++) {
         let segment: ƒ.Node = new ƒ.Node("Segment");

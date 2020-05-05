@@ -14,13 +14,36 @@ var L03_SnakeMove;
         L03_SnakeMove.viewport = new ƒ.Viewport();
         L03_SnakeMove.viewport.initialize("Viewport", snake, cmpCamera, canvas);
         ƒ.Debug.log(L03_SnakeMove.viewport);
+        document.addEventListener("keydown", hndKeydown);
         ƒ.Loop.addEventListener("loopFrame" /* LOOP_FRAME */, update);
         ƒ.Loop.start(ƒ.LOOP_MODE.TIME_REAL, 5);
     }
     function update(_event) {
         L03_SnakeMove.viewport.draw();
-        snake.move();
+        snake.moveSnake();
         console.log("Loop");
+    }
+    function hndKeydown(_event) {
+        let oldDirection = snake.direction;
+        switch (_event.code) {
+            case ƒ.KEYBOARD_CODE.ARROW_UP:
+                if (oldDirection.equals(ƒ.Vector3.Y(-1))) {
+                    snake.direction = oldDirection;
+                }
+                else {
+                    snake.direction = ƒ.Vector3.Y();
+                }
+                break;
+            case ƒ.KEYBOARD_CODE.ARROW_DOWN:
+                snake.direction = ƒ.Vector3.Y(-1);
+                break;
+            case ƒ.KEYBOARD_CODE.ARROW_RIGHT:
+                snake.direction = ƒ.Vector3.X();
+                break;
+            case ƒ.KEYBOARD_CODE.ARROW_LEFT:
+                snake.direction = ƒ.Vector3.X(-1);
+                break;
+        }
     }
 })(L03_SnakeMove || (L03_SnakeMove = {}));
 //# sourceMappingURL=Main.js.map
