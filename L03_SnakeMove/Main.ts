@@ -12,7 +12,7 @@ namespace L03_SnakeMove {
     snake = new Snake();
 
     let cmpCamera: ƒ.ComponentCamera = new ƒ.ComponentCamera();
-    cmpCamera.pivot.translateZ(10);
+    cmpCamera.pivot.translateZ(50);
     cmpCamera.pivot.rotateY(180);
 
     viewport = new ƒ.Viewport();
@@ -28,28 +28,37 @@ namespace L03_SnakeMove {
     snake.moveSnake();
     console.log("Loop");
   }
-
-
   function hndKeydown(_event: KeyboardEvent): void {
     let oldDirection: ƒ.Vector3 = snake.direction;
     switch (_event.code) {
       case ƒ.KEYBOARD_CODE.ARROW_UP:
-        if (oldDirection.equals(ƒ.Vector3.Y(-1))){
+        if (oldDirection.equals(ƒ.Vector3.Y(-1))) {
           snake.direction = oldDirection;
         } else {
           snake.direction = ƒ.Vector3.Y();
         }
         break;
       case ƒ.KEYBOARD_CODE.ARROW_DOWN:
-        snake.direction = ƒ.Vector3.Y(-1);
+        if (oldDirection.equals(ƒ.Vector3.Y())) {
+          snake.direction = oldDirection;
+        } else {
+          snake.direction = ƒ.Vector3.Y(-1);
+        }
         break;
       case ƒ.KEYBOARD_CODE.ARROW_RIGHT:
-        snake.direction = ƒ.Vector3.X();
+        if (oldDirection.equals(ƒ.Vector3.X(-1))) {
+          snake.direction = oldDirection;
+        } else {
+          snake.direction = ƒ.Vector3.X();
+        }
         break;
       case ƒ.KEYBOARD_CODE.ARROW_LEFT:
-        snake.direction = ƒ.Vector3.X(-1);
+        if (oldDirection.equals(ƒ.Vector3.X())) {
+          snake.direction = oldDirection;
+        } else {
+          snake.direction = ƒ.Vector3.X(-1);
+        }
         break;
     }
   }
-
 }

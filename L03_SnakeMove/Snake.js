@@ -9,21 +9,6 @@ var L03_SnakeMove;
             console.log("Creating Snake");
             this.createSegement(4);
         }
-        move() {
-            let nodes = this.getChildren();
-            let child = this.getChildren()[0];
-            let cmpPrev = child.getComponent(ƒ.ComponentTransform); // child.cmpTransform;
-            let mtxHead = nodes[0].getComponent(ƒ.ComponentTransform);
-            mtxHead.local.translate(this.direction);
-            let mtxHeadCopy = cmpPrev.local;
-            let cmpNew = new ƒ.ComponentTransform(mtxHeadCopy);
-            for (let segment of this.getChildren()) {
-                cmpPrev = segment.getComponent(ƒ.ComponentTransform);
-                segment.removeComponent(cmpPrev);
-                segment.addComponent(cmpNew);
-                cmpNew = cmpPrev;
-            }
-        }
         moveSnake() {
             let nodes = this.getChildren();
             let nextTrans = nodes[0].mtxLocal.translation;

@@ -10,22 +10,6 @@ namespace L03_SnakeMove {
       this.createSegement(4);
     }
 
-    public move(): void {
-      let nodes: ƒ.Node[] = this.getChildren();
-      let child: ƒ.Node = this.getChildren()[0];
-      let cmpPrev: ƒ.ComponentTransform = child.getComponent(ƒ.ComponentTransform);  // child.cmpTransform;
-      let mtxHead: ƒ.ComponentTransform = nodes[0].getComponent(ƒ.ComponentTransform);
-      mtxHead.local.translate(this.direction);
-      let mtxHeadCopy: ƒ.Matrix4x4 = cmpPrev.local;
-      let cmpNew: ƒ.ComponentTransform = new ƒ.ComponentTransform(mtxHeadCopy);
-
-      for (let segment of this.getChildren()) {
-        cmpPrev = segment.getComponent(ƒ.ComponentTransform);
-        segment.removeComponent(cmpPrev);
-        segment.addComponent(cmpNew);
-        cmpNew = cmpPrev;
-      }
-    }
     public moveSnake(): void {
       let nodes: ƒ.Node[] = this.getChildren();
       let nextTrans: ƒ.Vector3 = nodes[0].mtxLocal.translation;

@@ -9,7 +9,7 @@ var L03_SnakeMove;
         ƒ.Debug.log(canvas);
         snake = new L03_SnakeMove.Snake();
         let cmpCamera = new ƒ.ComponentCamera();
-        cmpCamera.pivot.translateZ(10);
+        cmpCamera.pivot.translateZ(50);
         cmpCamera.pivot.rotateY(180);
         L03_SnakeMove.viewport = new ƒ.Viewport();
         L03_SnakeMove.viewport.initialize("Viewport", snake, cmpCamera, canvas);
@@ -35,13 +35,28 @@ var L03_SnakeMove;
                 }
                 break;
             case ƒ.KEYBOARD_CODE.ARROW_DOWN:
-                snake.direction = ƒ.Vector3.Y(-1);
+                if (oldDirection.equals(ƒ.Vector3.Y())) {
+                    snake.direction = oldDirection;
+                }
+                else {
+                    snake.direction = ƒ.Vector3.Y(-1);
+                }
                 break;
             case ƒ.KEYBOARD_CODE.ARROW_RIGHT:
-                snake.direction = ƒ.Vector3.X();
+                if (oldDirection.equals(ƒ.Vector3.X(-1))) {
+                    snake.direction = oldDirection;
+                }
+                else {
+                    snake.direction = ƒ.Vector3.X();
+                }
                 break;
             case ƒ.KEYBOARD_CODE.ARROW_LEFT:
-                snake.direction = ƒ.Vector3.X(-1);
+                if (oldDirection.equals(ƒ.Vector3.X())) {
+                    snake.direction = oldDirection;
+                }
+                else {
+                    snake.direction = ƒ.Vector3.X(-1);
+                }
                 break;
         }
     }
